@@ -138,6 +138,14 @@ public class ApkDecoder {
                 }
             }
 
+            if (mJustRes){
+                mUncompressedFiles = new ArrayList<String>();
+                mAndrolib.recordUncompressedFiles(mApkFile, mUncompressedFiles);
+                mAndrolib.writeOriginalFiles(mApkFile, outDir);
+                writeMetaFile();
+                return;
+            }
+
             if (hasSources()) {
                 switch (mDecodeSources) {
                     case DECODE_SOURCES_NONE:

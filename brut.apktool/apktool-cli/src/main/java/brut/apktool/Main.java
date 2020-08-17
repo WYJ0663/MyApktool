@@ -151,7 +151,7 @@ public class Main {
             decoder.setApi(Integer.parseInt(cli.getOptionValue("api")));
         }
         if (cli.hasOption("just-res")) {
-            decoder.setDecodeSources(ApkDecoder.DECODE_SOURCES_SMALI_ONLY_MAIN_CLASSES);
+            decoder.setJustRes(true);
         }
         if (cli.hasOption("o") || cli.hasOption("output")) {
             outDir = new File(cli.getOptionValue("o"));
@@ -241,6 +241,7 @@ public class Main {
 
         if (cli.hasOption("r-path")) {
             apkOptions.RPath = cli.getOptionValue("r-path");
+            System.out.println( apkOptions.RPath);
         }
 
         if (cli.hasOption("use-aapt2-compile")) {
@@ -351,6 +352,11 @@ public class Main {
                 .desc("Do not decode assets.")
                 .build();
 
+        Option justResOption = Option.builder()
+                .longOpt("just-res")
+                .desc("just decode res.")
+                .build();
+
         Option debugDecOption = Option.builder("d")
                 .longOpt("debug")
                 .desc("REMOVED (DOES NOT WORK): Decode in debug mode.")
@@ -429,6 +435,13 @@ public class Main {
                 .desc("Upgrades apktool to use experimental aapt2 binary.")
                 .build();
 
+        Option rPathOption = Option.builder()
+                .longOpt("r-path")
+                .desc("R.java Path")
+                .hasArg(true)
+                .argName("dir")
+                .build();
+
         Option originalOption = Option.builder("c")
                 .longOpt("copy-original")
                 .desc("Copies original AndroidManifest.xml and META-INF. See project page for more info.")
@@ -476,6 +489,7 @@ public class Main {
             DecodeOptions.addOption(onlyMainClassesOption);
             DecodeOptions.addOption(apiLevelOption);
             DecodeOptions.addOption(noAssetOption);
+            DecodeOptions.addOption(justResOption);
             DecodeOptions.addOption(forceManOption);
 
             BuildOptions.addOption(apiLevelOption);
@@ -483,6 +497,7 @@ public class Main {
             BuildOptions.addOption(aaptOption);
             BuildOptions.addOption(originalOption);
             BuildOptions.addOption(aapt2Option);
+            BuildOptions.addOption(rPathOption);
             BuildOptions.addOption(noCrunchOption);
         }
 
@@ -530,6 +545,7 @@ public class Main {
         allOptions.addOption(noDbgOption);
         allOptions.addOption(forceManOption);
         allOptions.addOption(noAssetOption);
+        allOptions.addOption(justResOption);
         allOptions.addOption(keepResOption);
         allOptions.addOption(debugBuiOption);
         allOptions.addOption(aaptOption);
@@ -537,6 +553,7 @@ public class Main {
         allOptions.addOption(verboseOption);
         allOptions.addOption(quietOption);
         allOptions.addOption(aapt2Option);
+        allOptions.addOption(rPathOption);
         allOptions.addOption(noCrunchOption);
         allOptions.addOption(onlyMainClassesOption);
     }

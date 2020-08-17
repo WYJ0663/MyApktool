@@ -76,6 +76,20 @@ public class VectorDrawableTest extends BaseTest {
     }
 
     @Test
+    public void decode2() throws BrutException, IOException {
+
+//        String in = "D:\\develop\\project\\mine\\apk\\tool\\resources-debug.ap_";
+        String in = "D:\\develop\\project\\mine\\apk\\tool\\androidkugou-debug.apk";
+        String out = in + "_out";
+        ApkDecoder apkDecoder = new ApkDecoder(new File(in));
+        sTestOrigDir = new ExtFile(out);
+        apkDecoder.setJustRes(true);
+        apkDecoder.setOutDir(new File(out));
+        apkDecoder.decode();
+    }
+
+
+    @Test
     public void build() throws BrutException, IOException {
 //        String in = "D:\\develop\\project\\mine\\apk\\tool\\resources-debug.ap_";
         String in = "D:\\develop\\project\\mine\\apk\\tool\\androidkugou-debug.apk";
